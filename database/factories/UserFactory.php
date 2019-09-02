@@ -32,6 +32,9 @@ $factory->define(\Forum\Thread::class, function (Faker $faker) {
         'user_id' => function () {
             return factory('Forum\User')->create()->id;
         },
+        'channel_id' => function() {
+            return factory('Forum\Channel')->create()->id;
+        },
         'title' => $faker->sentence,
         'body' => $faker->paragraph
     ];
@@ -46,6 +49,14 @@ $factory->define(\Forum\Reply::class, function (Faker $faker) {
             return factory('Forum\User')->create()->id;
         },
         'body' => $faker->paragraph
+    ];
+});
+
+$factory->define(\Forum\Channel::class, function (Faker $faker) {
+    $name = $faker->word;
+    return [
+        'name' => $name,
+        'slug' => $name
     ];
 });
 

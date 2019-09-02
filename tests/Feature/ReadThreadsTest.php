@@ -28,10 +28,10 @@ class ReadThreadsTest extends TestCase
     }
 
     /** @test */
-    function a_user_can_read_replies_that_are_associated_with_a_thread()
-    {
-        $reply = create('Forum\Reply', ['thread_id' => $this->thread->id]);
-        $this->get('/threads/' . $this->thread->id)->assertSee($reply->body);
-    }
+//    function a_user_can_read_replies_that_are_associated_with_a_thread()
+//    {
+//        $reply = create('Forum\Reply', ['thread_id' => $this->thread->id]);
+//        $this->get('/threads/' . $this->thread->id)->assertSee($reply->body);
+//    }
 
 }
