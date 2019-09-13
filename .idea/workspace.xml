@@ -1,31 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="367627ff-af81-44e6-be05-2e91144f3173" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/threads/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RepliesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RepliesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ThreadsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ThreadsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Thread.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Thread.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_09_02_141021_create_threads_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_09_02_141021_create_threads_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/threads/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/threads/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/CreateThreadsTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/CreateThreadsTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/ParticipateInForumTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/ParticipateInForumTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/ReadThreadsTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/ReadThreadsTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/TestCase.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/TestCase.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/ThreadTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/ThreadTest.php" afterDir="false" />
-    </list>
+    <list default="true" id="367627ff-af81-44e6-be05-2e91144f3173" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution>
       <executable />
@@ -181,91 +164,6 @@
               <item name="forum" type="b2602c69:ProjectViewProjectNode" />
               <item name="forum" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="forum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="forum" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="forum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="forum" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="forum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="forum" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="forum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="forum" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="Http" type="462c0819:PsiDirectoryNode" />
-              <item name="Middleware" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="forum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="forum" type="462c0819:PsiDirectoryNode" />
-              <item name="bootstrap" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="forum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="forum" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="forum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="forum" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="forum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="forum" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="auth" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="forum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="forum" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="layouts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="forum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="forum" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="views" type="462c0819:PsiDirectoryNode" />
-              <item name="threads" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="forum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="forum" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="forum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="forum" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-              <item name="Feature" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="forum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="forum" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-              <item name="Unit" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="forum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="forum" type="462c0819:PsiDirectoryNode" />
-              <item name="tests" type="462c0819:PsiDirectoryNode" />
-              <item name="utilities" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -347,6 +245,7 @@
       <option name="presentableId" value="Default" />
       <updated>1567433335951</updated>
       <workItem from="1567433341240" duration="18733000" />
+      <workItem from="1567487588817" duration="34000" />
     </task>
     <servers />
   </component>
@@ -383,7 +282,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18733000" />
+    <option name="totallyTimeSpent" value="18767000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
@@ -517,16 +416,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/Feature/fooTest.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="13" />
-          <folding>
-            <element signature="e#33#52#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/Feature/fooTest.php" />
     <entry file="file://$PROJECT_DIR$/resources/views/threads/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
