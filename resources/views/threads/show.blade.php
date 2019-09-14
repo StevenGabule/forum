@@ -2,30 +2,24 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
                         <h3>{{ $thread->title }}</h3>
-                        <p class="lead">Posted by: <a href="#">{{ $thread->creator->name }}</a></p>
+                        <p class="lead">Posted by: <a href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a></p>
                     </div>
                     <div class="card-body">
                         {{ $thread->body }}
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                @foreach($thread->replies as $reply)
+                </div><!-- end of 1st card -->
+
+                @foreach($replies as $reply)
                     @include('threads.reply')
                 @endforeach
-            </div>
-        </div>
+                {{ $replies->links() }}
 
-        @if(auth()->check())
-            <div class="row justify-content-center mt-4">
-                <div class="col-md-8 col-md-offset-2">
+                @if(auth()->check())
                     <form action="{{ $thread->path() . '/replies' }}" method="post">
                         @csrf
                         <div class="form-group">
@@ -34,10 +28,20 @@
                         </div>
                         <button type="submit" class="btn btn-danger">Post</button>
                     </form>
+                @else
+                    <p class="text-center">Please <a href="/login">sign in</a> to participate in the discussion.</p>
+                @endif
+            </div><!-- end of col-md-8 -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <p>
+                            This thread was published {{ $thread->created_at->diffForHumans() }} by
+                            <a href="#">{{ $thread->creator->name }}</a>, and currently has {{ $thread->replies_count }} {{ str_plural('comment', $thread->replies_count) }}.
+                        </p>
+                    </div>
                 </div>
             </div>
-        @else
-            <p class="text-center">Please <a href="/login">sign in</a> to participate in the discussion.</p>
-        @endif
-    </div>
+        </div><!-- end of row -->
+    </div><!-- end of container -->
 @endsection

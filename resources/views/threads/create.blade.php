@@ -11,14 +11,32 @@
                         <form action="/threads" method="post">
                             @csrf
                             <div class="form-group">
-                                <label for="title">Title:</label>
-                                <input type="text" class="form-control" id="title" name="title" placeholder="Title...">
+                                <label for="channel_id">Choose a Channel:</label>
+                                <select name="channel_id" id="channel_id" class="form-control" required>
+                                    <option value="">Choose one...</option>
+                                    @foreach($channels as $channel)
+                                        <option value="{{ $channel->id }}" {{ old('channel_id') == $channel->id ? 'selected' : '' }}>{{ $channel->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group">
-                                <textarea name="body" class="form-control" id="body" cols="" rows="8" placeholder="Description..."></textarea>
+                                <label for="title">Title:</label>
+                                <input type="text" class="form-control" id="title" name="title" placeholder="Title..."
+                                       value="{{ old('title') }}" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea name="body" class="form-control" id="body" cols="" rows="8"
+                                          placeholder="Description..." required>{{ old('body') }}</textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Published</button>
                         </form>
+                        @if(count($errors))
+                            <ul class="alert alert-danger mt-3">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
                     </div>
                 </div>
             </div>
