@@ -3,6 +3,7 @@
 namespace Forum\Http\Controllers;
 
 
+use Exception;
 use Forum\Channel;
 use Forum\Filters\ThreadFilters;
 use Forum\Thread;
@@ -65,7 +66,7 @@ class ThreadsController extends Controller
             'title' => request('title'),
             'body' => request('body')
         ]);
-        return redirect($thread->path());
+        return redirect($thread->path())->with('flash','Your thread has been published!');
     }
 
     /**
@@ -76,7 +77,7 @@ class ThreadsController extends Controller
      */
     public function show($channelId, Thread $thread)
     {
-        return view('threads.show',[
+        return view('threads.show', [
             'thread' => $thread,
             'replies' => $thread->replies()->paginate(20)
         ]);
@@ -108,12 +109,20 @@ class ThreadsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param $channel
      * @param Thread $thread
-     * @return Response
+     * @return void
+     * @throws Exception
      */
-    public function destroy(Thread $thread)
+    public function destroy($channel, Thread $thread)
     {
-        //
+        $this->authorize('update', $thread);
+
+        $thread->delete();
+        if (request()->wantsJson()) {
+            return response([], 204);
+        }
+        return redirect('/threads');
     }
 
     /**

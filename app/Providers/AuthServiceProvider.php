@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'Forum\Model' => 'Forum\Policies\ModelPolicy',
+         'Forum\Thread' => 'Forum\Policies\ThreadPolicy',
     ];
 
     /**
@@ -25,6 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::before(function($user) {
+            if ($user->name === 'johnpaul gabule') return true;
+        });
     }
 }
