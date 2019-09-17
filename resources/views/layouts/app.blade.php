@@ -15,6 +15,15 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css" />
+    <script>
+        window.App = {!!json_encode(['csrfToken' => csrf_token(), 'user' => Auth::user(), 'signedIn' => Auth::check()]) !!};
+    </script>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
 </head>
 <body style="padding-bottom: 100px;">
 <div id="app">
@@ -26,5 +35,6 @@
 </div>
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}" defer></script>
+
 </body>
 </html>

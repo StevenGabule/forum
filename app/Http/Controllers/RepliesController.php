@@ -2,6 +2,7 @@
 
 namespace Forum\Http\Controllers;
 
+use Forum\Reply;
 use Forum\Thread;
 
 class RepliesController extends Controller
@@ -21,4 +22,19 @@ class RepliesController extends Controller
 
         return back()->with('flash', 'Your reply has been left.');
     }
+
+    public function update(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+        $reply->update(request(['body']));
+    }
+
+    public function destroy(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+        $reply->delete();
+        if (request()->expectsJson()) return response(['status' => 'Reply deleted']);
+        return back();
+    }
+
 }

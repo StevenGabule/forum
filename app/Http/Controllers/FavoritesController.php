@@ -2,6 +2,7 @@
 
 namespace Forum\Http\Controllers;
 
+use Forum\Favorite;
 use Forum\Reply;
 class FavoritesController extends Controller
 {
@@ -14,5 +15,10 @@ class FavoritesController extends Controller
     {
         $reply->favorite();
         return back();
+    }
+
+    public function destroy(Reply $reply)
+    {
+        $reply->unfavorite();
     }
 }
