@@ -8,9 +8,8 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <h3 class="text-capitalize">{{ $thread->title }} <br>
-                                <small class="small">Posted by: <a
-                                        href="/profiles/{{ $thread->creator->name }}"
-                                        class="text-capitalize">{{ $thread->creator->name }}</a>
+                                <small class="small">
+                                    Posted by: <a href="/profiles/{{ $thread->creator->name }}" class="text-capitalize">{{ $thread->creator->name }}</a>
                                 </small>
                             </h3>
                             @can('update', $thread)
@@ -26,21 +25,10 @@
                         </div>
                     </div><!-- end of 1st card -->
 
-                    <replies :data="{{ $thread->replies }}" @removed="repliesCount--"></replies>
+                    <replies @added="repliesCount++" @removed="repliesCount--"></replies>
 
-                    @if(auth()->check())
-                        <form action="{{ $thread->path() . '/replies' }}" method="post" class="mt-3">
-                            @csrf
-                            <div class="form-group">
-                            <textarea name="body" id="body" cols="" rows="5" class="form-control"
-                                      placeholder="Have something to saay?"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-danger">Post</button>
-                        </form>
-                    @else
-                        <p class="text-center">Please <a href="/login">sign in</a> to participate in the discussion.</p>
-                    @endif
                 </div><!-- end of col-md-8 -->
+
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">

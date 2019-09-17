@@ -4,7 +4,7 @@
             <div class="level d-flex justify-content-between">
                 <h5>
                     <a :href="'/profiles/'+ data.owner.name" v-text="data.owner.name"></a>
-                    said {{ data.created_at }}...
+                    said <span v-text="ago"></span>
                 </h5>
                 <div v-if="signedIn">
                     <favorite :reply="data"></favorite>
@@ -13,7 +13,7 @@
         </div>
         <div class="card-body">
             <div v-if="editing">
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <textarea class="form-control" v-model="body"></textarea>
                 </div>
                 <button class="btn btn-sm btn-primary" @click="update">Update</button>
@@ -32,6 +32,7 @@
 </template>
 <script>
     import Favorite from './Favorite';
+    import moment from 'moment';
 
     export default {
         props: ['data'],
@@ -52,6 +53,9 @@
            },
             canUpdate() {
                return this.authorize(user => this.data.user_id === user.id);
+            },
+            ago() {
+                return moment(this.data.created_at).fromNow() + '...';
             }
         },
 
