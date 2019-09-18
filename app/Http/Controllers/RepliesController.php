@@ -14,12 +14,13 @@ class RepliesController extends Controller
 
     public function index($channelId, Thread $thread)
     {
-        return $thread->replies()->paginate(3);
+        return $thread->replies()->paginate(10);
     }
 
     public function store($channelId, Thread $thread)
     {
         $this->validate(request(), ['body' => 'required']);
+
         $reply = $thread->addReply([
             'body' => request('body'),
             'user_id' => auth()->id()
@@ -45,5 +46,4 @@ class RepliesController extends Controller
         if (request()->expectsJson()) return response(['status' => 'Reply deleted']);
         return back();
     }
-
 }
