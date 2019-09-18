@@ -60,4 +60,11 @@ $factory->define(\Forum\Channel::class, function (Faker $faker) {
     ];
 });
 
+$factory->define(\Illuminate\Notifications\DatabaseNotification::class, function (Faker $faker) {
+    return [
+        'id' =>
+    ];
+});
+
+
 
