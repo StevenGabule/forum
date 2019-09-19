@@ -9,7 +9,13 @@
                         <div class="card-header">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <a href="{{ $thread->path() }}" class="text-capitalize">{{ $thread->title }}</a>
+                                    <a href="{{ $thread->path() }}" class="text-capitalize">
+                                        @if(auth()->check() && $thread->hasUpdateFor(auth()->user()))
+                                            <strong>{{ $thread->title }}</strong>
+                                        @else
+                                            {{ $thread->title }}
+                                        @endif
+                                    </a>
                                 </div>
                                 <a href="{{ $thread->path() }}">{{ $thread->replies_count }} {{ str_plural('reply', $thread->replies_count) }}</a>
                             </div>

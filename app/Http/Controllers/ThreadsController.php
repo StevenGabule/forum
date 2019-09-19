@@ -3,6 +3,7 @@
 namespace Forum\Http\Controllers;
 
 
+use Carbon\Carbon;
 use Exception;
 use Forum\Channel;
 use Forum\Filters\ThreadFilters;
@@ -72,11 +73,16 @@ class ThreadsController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param $channelId
      * @param Thread $thread
      * @return Response
+     * @throws Exception
      */
     public function show($channelId, Thread $thread)
     {
+        if (auth()->check()) {
+            auth()->user()->read($thread);
+        }
         return view('threads.show', compact('thread'));
     }
 
