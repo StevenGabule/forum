@@ -2,7 +2,6 @@
 
 namespace Forum;
 
-use Forum\Events\ThreadHasNewReply;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model

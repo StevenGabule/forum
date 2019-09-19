@@ -2,8 +2,12 @@
 
 namespace Forum\Http\Controllers;
 
+use Forum\Inspections\Spam;
 use Forum\Reply;
 use Forum\Thread;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\ValidationException;
 
 class RepliesController extends Controller
 {
@@ -17,9 +21,17 @@ class RepliesController extends Controller
         return $thread->replies()->paginate(10);
     }
 
-    public function store($channelId, Thread $thread)
+    /**
+     * @param $channelId
+     * @param Thread $thread
+     * @param Spam $spam
+     * @return Model|RedirectResponse
+     * @throws ValidationException
+     */
+    public function store($channelId, Thread $thread, Spam $spam)
     {
         $this->validate(request(), ['body' => 'required']);
+        $spam->detect(request('body'));
 
         $reply = $thread->addReply([
             'body' => request('body'),
@@ -33,9 +45,11 @@ class RepliesController extends Controller
         return back()->with('flash', 'Your reply has been left.');
     }
 
-    public function update(Reply $reply)
+    public function update(Reply $reply, Spam $spam)
     {
         $this->authorize('update', $reply);
+        $this->validate(request(), ['body' => 'required']);
+        $spam->detect(request('body'));
         $reply->update(request(['body']));
     }
 
