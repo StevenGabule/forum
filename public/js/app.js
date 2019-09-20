@@ -2010,6 +2010,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -16761,7 +16763,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 
 // Support: Safari 8 only
 // In Safari 8 documents created via document.implementation.createHTMLDocument
-// collapse sibling Forms: the second one becomes a child of the first one.
+// collapse sibling forms: the second one becomes a child of the first one.
 // Because of that, this security measure has to be disabled in Safari 8.
 // https://bugs.webkit.org/show_bug.cgi?id=137337
 support.createHTMLDocument = ( function() {
@@ -43655,7 +43657,7 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
                 return monthsNominative;
             } else if (format === '') {
                 // Hack: if format empty we know this is used to generate
-                // RegExp by moment. Give then back both valid Forms of months
+                // RegExp by moment. Give then back both valid forms of months
                 // in RegExp ready format.
                 return '(' + monthsSubjective[momentToFormat.month()] + '|' + monthsNominative[momentToFormat.month()] + ')';
             } else if (/D MMMM/.test(format)) {
@@ -56014,50 +56016,49 @@ var render = function() {
       _c("div", { staticClass: "card-body" }, [
         _vm.editing
           ? _c("div", [
-              _c("div", { staticClass: "form-group mt-3" }, [
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.body,
-                      expression: "body"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  domProps: { value: _vm.body },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c("form", { on: { submit: _vm.update } }, [
+                _c("div", { staticClass: "form-group mt-3" }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.body,
+                        expression: "body"
                       }
-                      _vm.body = $event.target.value
+                    ],
+                    staticClass: "form-control",
+                    attrs: { required: "" },
+                    domProps: { value: _vm.body },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.body = $event.target.value
+                      }
                     }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-primary",
-                  on: { click: _vm.update }
-                },
-                [_vm._v("Update")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-link",
-                  on: {
-                    click: function($event) {
-                      _vm.editing = false
+                  })
+                ]),
+                _vm._v(" "),
+                _c("button", { staticClass: "btn btn-sm btn-primary" }, [
+                  _vm._v("Update")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-link",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.editing = false
+                      }
                     }
-                  }
-                },
-                [_vm._v("Cancel")]
-              )
+                  },
+                  [_vm._v("Cancel")]
+                )
+              ])
             ])
           : _c("div", { domProps: { textContent: _vm._s(_vm.body) } })
       ]),
