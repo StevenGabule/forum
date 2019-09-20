@@ -4,10 +4,10 @@ namespace Forum\Http\Controllers;
 
 use Exception;
 use Forum\Http\Requests\CreatePostForm;
+use Forum\Notifications\YouWereMentioned;
 use Forum\Reply;
 use Forum\Thread;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\RedirectResponse;
+use Forum\User;
 
 class RepliesController extends Controller
 {
@@ -23,9 +23,20 @@ class RepliesController extends Controller
 
     public function store($channelId, Thread $thread, CreatePostForm $form)
     {
-//        if (\Gate::denies('create', new Reply)) return response('You are posting too frequently. Please take a break.', 429);
-        return $thread->addReply(['body' => request('body'), 'user_id' => auth()->id()])->load('owner');
-//        return $form->persist($thread);
+        $reply = $thread->addReply(['body' => request('body'), 'user_id' => auth()->id()]);
+
+        preg_match_all('/\@([^\s\.]+)/', $reply->body, $matches);
+
+        $names = $matches[1];
+
+        foreach ($names as $name) {
+            $user = User::whereName($name)->first();
+            if ($user) {
+                $user->notify(new YouWereMentioned($reply));
+            }
+        }
+
+        return $reply->load('owner');
     }
 
     public function update(Reply $reply)
