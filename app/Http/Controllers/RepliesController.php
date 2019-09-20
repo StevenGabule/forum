@@ -2,12 +2,12 @@
 
 namespace Forum\Http\Controllers;
 
-use Forum\Inspections\Spam;
+use Exception;
+use Forum\Http\Requests\CreatePostForm;
 use Forum\Reply;
 use Forum\Thread;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Validation\ValidationException;
 
 class RepliesController extends Controller
 {
@@ -21,36 +21,22 @@ class RepliesController extends Controller
         return $thread->replies()->paginate(10);
     }
 
-    /**
-     * @param $channelId
-     * @param Thread $thread
-     * @param Spam $spam
-     * @return Model|RedirectResponse
-     * @throws ValidationException
-     */
-    public function store($channelId, Thread $thread, Spam $spam)
+    public function store($channelId, Thread $thread, CreatePostForm $form)
     {
-        $this->validate(request(), ['body' => 'required']);
-        $spam->detect(request('body'));
-
-        $reply = $thread->addReply([
-            'body' => request('body'),
-            'user_id' => auth()->id()
-        ]);
-
-        if (request()->expectsJson()) {
-            return $reply->load('owner');
-        }
-
-        return back()->with('flash', 'Your reply has been left.');
+//        if (\Gate::denies('create', new Reply)) return response('You are posting too frequently. Please take a break.', 429);
+        return $thread->addReply(['body' => request('body'), 'user_id' => auth()->id()])->load('owner');
+//        return $form->persist($thread);
     }
 
-    public function update(Reply $reply, Spam $spam)
+    public function update(Reply $reply)
     {
         $this->authorize('update', $reply);
-        $this->validate(request(), ['body' => 'required']);
-        $spam->detect(request('body'));
-        $reply->update(request(['body']));
+        try {
+            $this->validate(request(), ['body' => 'required|spamfree']);
+            $reply->update(request(['body']));
+        } catch (Exception $e) {
+            return response('Sorry, your reply could not be saved at this time.', 422);
+        }
     }
 
     public function destroy(Reply $reply)
@@ -60,4 +46,5 @@ class RepliesController extends Controller
         if (request()->expectsJson()) return response(['status' => 'Reply deleted']);
         return back();
     }
+
 }

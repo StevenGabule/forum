@@ -3,11 +3,9 @@
 namespace Forum\Http\Controllers;
 
 
-use Carbon\Carbon;
 use Exception;
 use Forum\Channel;
 use Forum\Filters\ThreadFilters;
-use Forum\Inspections\Spam;
 use Forum\Thread;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -54,15 +52,9 @@ class ThreadsController extends Controller
      * @return Response
      * @throws ValidationException
      */
-    public function store(Request $request, Spam $spam)
+    public function store(Request $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required',
-            'channel_id' => 'required|exists:channels,id'
-        ]);
-
-        $spam->detect(request('body'));
+        $this->validate($request, ['title' => 'required|spamfree', 'body' => 'required|spamfree', 'channel_id' => 'required|exists:channels,id']);
 
         $thread = Thread::create([
             'user_id' => auth()->id(),
@@ -70,7 +62,8 @@ class ThreadsController extends Controller
             'title' => request('title'),
             'body' => request('body')
         ]);
-        return redirect($thread->path())->with('flash','Your thread has been published!');
+
+        return redirect($thread->path())->with('flash', 'Your thread has been published!');
     }
 
     /**

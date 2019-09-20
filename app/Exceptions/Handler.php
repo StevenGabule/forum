@@ -2,6 +2,7 @@
 
 namespace Forum\Exceptions;
 
+use Dotenv\Exception\ValidationException;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
@@ -30,9 +31,9 @@ class Handler extends ExceptionHandler
 
     /**
      * Report or log an exception.
-     *
      * @param Exception $exception
      * @return void
+     * @throws Exception
      */
     public function report(Exception $exception)
     {
@@ -49,6 +50,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof ValidationException) {
+            if ($request->wantsJson())
+                return response('Sorry, validation failed', 422);
+        }
+        if ($exception instanceof ThrottleException) {
+            return response('You are posting too frequently.', 429);
+        }
         return parent::render($request, $exception);
     }
 }
