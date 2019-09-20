@@ -17,6 +17,11 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        'Forum\Events\ThreadReceivedNewReply' => [
+            'Forum\Listeners\NotifyMentionedUsers',
+            'Forum\Listeners\NotifySubscribers',
+        ],
+
     ];
 
     /**
@@ -27,7 +32,5 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
-        //
     }
 }
