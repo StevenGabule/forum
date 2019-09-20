@@ -2,10 +2,7 @@
     <div :id="'reply-'+id" class="card my-4">
         <div class="card-header">
             <div class="level d-flex justify-content-between">
-                <h5>
-                    <a :href="'/profiles/'+ data.owner.name" v-text="data.owner.name"></a>
-                    said <span v-text="ago"></span>
-                </h5>
+                <h5><a :href="'/profiles/'+ data.owner.name" v-text="data.owner.name"></a>said <span v-text="ago"></span></h5>
                 <div v-if="signedIn">
                     <favorite :reply="data"></favorite>
                 </div>
@@ -21,7 +18,7 @@
                     <button class="btn btn-sm btn-link" @click="editing = false" type="button">Cancel</button>
                 </form>
             </div>
-            <div v-else v-text="body"></div>
+            <div v-else v-html="body"></div>
         </div>
 
         <div class="card-footer d-flex" v-if="canUpdate">
@@ -74,6 +71,7 @@
             destroy() {
                 axios.delete(`/replies/${this.data.id}`);
                 this.$emit('deleted', this.data.id);
+                flash('You successfully deleted reply!!!', 'danger');
             }
         }
     }
