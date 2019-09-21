@@ -133,12 +133,11 @@ class ThreadsController extends Controller
     {
         $threads = Thread::latest()->filter($filters);
 
-        if ($channel->exists)
+        if ($channel->exists) {
             $threads->where('channel_id', $channel->id);
+        }
 
-        $threads = $threads->get();
-        return $threads;
+        return $threads->paginate(25);
     }
-
 
 }

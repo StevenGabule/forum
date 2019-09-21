@@ -3,10 +3,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 offset-2">
-                <h1 class="page-header text-capitalize border-bottom pb-2 mb-3">
-                    {{ $profileUser->name }}
-                </h1>
-
+                <avatar-form :user="{{ $profileUser }}"></avatar-form>
                 @forelse($activities as $date => $activity)
                     <h3 class="h3">{{ $date }}</h3>
                     @foreach($activity as $record)

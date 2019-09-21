@@ -9,6 +9,7 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
+                            <img src="{{ $thread->creator->avatar_path }}" alt="" width="100" height="100">
                             <h3 class="text-capitalize">{{ $thread->title }} <br>
                                 <small class="small">
                                     Posted by: <a href="/profiles/{{ $thread->creator->name }}"

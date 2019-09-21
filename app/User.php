@@ -3,9 +3,7 @@
 namespace Forum;
 
 use Carbon\Carbon;
-use Forum\Filters\ThreadFilters;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -18,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'avatar_path'
     ];
 
     /**
@@ -69,4 +67,8 @@ class User extends Authenticatable
         return sprintf("users.%s.visits.%s", $this->id, $thread->id);
     }
 
+    public function getAvatarPathAttribute($avatar)
+    {
+        return asset($avatar ? '/storage/' . $avatar : '/storage/images/avatars/default.png');
+    }
 }
