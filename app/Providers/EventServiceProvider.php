@@ -16,13 +16,11 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
-            'Forum\Listeners\SendEmailConfirmationRequest'
         ],
         'Forum\Events\ThreadReceivedNewReply' => [
             'Forum\Listeners\NotifyMentionedUsers',
             'Forum\Listeners\NotifySubscribers',
         ],
-
     ];
 
     /**

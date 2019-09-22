@@ -2,9 +2,12 @@
 
 namespace Forum\Http\Controllers\Auth;
 
+use Forum\Mail\PleaseConfirmYourEmail;
 use Forum\User;
 use Forum\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -43,7 +46,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -58,8 +61,8 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return \Forum\User
+     * @param array $data
+     * @return User
      */
     protected function create(array $data)
     {
@@ -69,5 +72,18 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'confirmation_token' => str_random(25),
         ]);
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param Request $request
+     * @param mixed $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        Mail::to($user)->send(new PleaseConfirmYourEmail($user));
+        return redirect($this->redirectPath());
     }
 }
