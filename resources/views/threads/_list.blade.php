@@ -20,7 +20,7 @@
             <div class="body">{{ $thread->body }}</div>
         </div><!-- end of card body -->
         <div class="card-footer">
-            {{ $thread->visits() }} visits
+            {{ $thread->visits()->count() }} visits
         </div>
     </div><!-- end of card -->
 @empty
