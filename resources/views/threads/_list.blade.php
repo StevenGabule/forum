@@ -19,6 +19,9 @@
         <div class="card-body">
             <div class="body">{{ $thread->body }}</div>
         </div><!-- end of card body -->
+        <div class="card-footer">
+            {{ $thread->visits() }} visits
+        </div>
     </div><!-- end of card -->
 @empty
     <p class="text-center">There are no relevant results at this time.</p>

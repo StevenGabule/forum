@@ -7,9 +7,9 @@ use Exception;
 use Forum\Channel;
 use Forum\Filters\ThreadFilters;
 use Forum\Thread;
+use Forum\Trending;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Validation\ValidationException;
 
 class ThreadsController extends Controller
@@ -20,6 +20,7 @@ class ThreadsController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
+//        Redis::del('trending_threads');
     }
 
     /**
@@ -27,14 +28,17 @@ class ThreadsController extends Controller
      *
      * @param Channel $channel
      * @param ThreadFilters $filters
+     * @param Trending $trending
      * @return Response
      */
-    public function index(Channel $channel, ThreadFilters $filters)
+    public function index(Channel $channel, ThreadFilters $filters, Trending $trending)
     {
         $threads = $this->getThreads($channel, $filters);
         if (request()->wantsJson()) return $threads;
-        $trending = array_map('json_decode', Redis::zrevrange('trending_threads', 0, 4));
-        return view('threads.index', compact('threads', 'trending'));
+        return view('threads.index', [
+            'threads' => $threads,
+            'trending' => $trending->get()
+        ]);
     }
 
     /**
@@ -73,15 +77,16 @@ class ThreadsController extends Controller
      *
      * @param $channelId
      * @param Thread $thread
+     * @param Trending $trending
      * @return Response
-     * @throws Exception
      */
-    public function show($channelId, Thread $thread)
+    public function show($channelId, Thread $thread, Trending $trending)
     {
         if (auth()->check()) {
             auth()->user()->read($thread);
         }
-        Redis::ZINCRBY("trending_threads", 1, json_encode(['title' => $thread->title,'path' => $thread->path()]));
+        $trending->push($thread);
+        $thread->recordVisits();
         return view('threads.show', compact('thread'));
     }
 
@@ -135,11 +140,9 @@ class ThreadsController extends Controller
     protected function getThreads(Channel $channel, ThreadFilters $filters)
     {
         $threads = Thread::latest()->filter($filters);
-
         if ($channel->exists) {
             $threads->where('channel_id', $channel->id);
         }
-
         return $threads->paginate(25);
     }
 

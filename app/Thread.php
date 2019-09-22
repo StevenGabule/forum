@@ -4,10 +4,11 @@ namespace Forum;
 
 use Forum\Events\ThreadReceivedNewReply;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Redis;
 
 class Thread extends Model
 {
-    use RecordsActivity;
+    use RecordsActivity, RecordsVisits;
 
     protected $guarded = [];
     protected $with = ['creator', 'channel'];
@@ -92,4 +93,5 @@ class Thread extends Model
         $key = $user->visitedThreadCacheKey($this);
         return $this->updated_at > cache($key);
     }
+
 }
