@@ -36,7 +36,8 @@ $factory->define(\Forum\Thread::class, function (Faker $faker) {
             return factory('Forum\Channel')->create()->id;
         },
         'title' => $faker->sentence,
-        'body' => $faker->paragraph
+        'body' => $faker->paragraph,
+        'visits' => 0
     ];
 });
 
