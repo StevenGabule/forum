@@ -38,7 +38,8 @@ $factory->define(\Forum\Thread::class, function (Faker $faker) {
         },
         'title' => $faker->sentence,
         'body' => $faker->paragraph,
-        'visits' => 0
+        'visits' => 0,
+        'slug' => str_slug($faker->sentence)
     ];
 });
 
