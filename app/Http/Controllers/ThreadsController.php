@@ -20,7 +20,7 @@ class ThreadsController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
-//        Redis::del('trending_threads');
+//        \Redis::del('trending_threads');
     }
 
     /**

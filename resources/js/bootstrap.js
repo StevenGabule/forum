@@ -1,5 +1,20 @@
 import Vue from "vue";
+
 window._ = require('lodash');
+
+let authorizations = require('./authorizations');
+
+Vue.prototype.authorize = function (...params) {
+    if (!window.App.signedIn) return false;
+
+    if (typeof params[0] === 'string') {
+        return authorizations[params[0]](params[1]);
+    }
+
+    return params[0](window.App.user);
+};
+
+Vue.prototype.signedIn = window.App.signedIn;
 
 try {
     window.Popper = require('popper.js').default;
@@ -20,11 +35,9 @@ if (token) {
 
 window.events = new Vue();
 
-Vue.prototype.authorize = function(handler) {
-    let user = window.App.user;
-    return user ? handler(user) : false;
-};
 
-window.flash = function (message, level='success') {
-    window.events.$emit('flash', { message, level });
+
+
+window.flash = function (message, level = 'success') {
+    window.events.$emit('flash', {message, level});
 };

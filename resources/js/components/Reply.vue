@@ -1,8 +1,9 @@
 <template>
     <div :id="'reply-'+id" class="card my-4">
-        <div class="card-header">
+        <div class="card-header" :class="isBest ? 'bg-success text-white' : ''">
             <div class="level d-flex justify-content-between">
-                <h5><a :href="'/profiles/'+ data.owner.name" v-text="data.owner.name"></a>said <span v-text="ago"></span></h5>
+                <h5><a :href="'/profiles/'+ data.owner.name" v-text="data.owner.name" class="text-dark"></a> said <span
+                    v-text="ago"></span></h5>
                 <div v-if="signedIn">
                     <favorite :reply="data"></favorite>
                 </div>
@@ -21,9 +22,12 @@
             <div v-else v-html="body"></div>
         </div>
 
-        <div class="card-footer d-flex" v-if="canUpdate">
-            <button class="btn btn-sm btn-info mr-2" @click="editing = true">Edit</button>
-            <button class="btn btn-sm btn-danger mr-2" @click="destroy">Delete</button>
+        <div class="card-footer d-flex" >
+            <div v-if="authorize('updateReply', reply)">
+                <button class="btn btn-sm btn-info mr-2" @click="editing = true">Edit</button>
+                <button class="btn btn-sm btn-danger mr-2" @click="destroy">Delete</button>
+            </div>
+            <button class="btn btn-sm btn-light ml-auto" @click="maskBestReply" v-show="!isBest">Mark as Best</button>
         </div>
 
     </div>
@@ -40,19 +44,15 @@
             return {
                 editing: false,
                 id: this.data.id,
-                body: this.data.body
+                body: this.data.body,
+                isBest: false,
+                reply: this.data,
             }
         },
 
         components: {Favorite},
 
         computed: {
-            signedIn() {
-                return window.App.signedIn;
-            },
-            canUpdate() {
-                return this.authorize(user => this.data.user_id === user.id);
-            },
             ago() {
                 return moment(this.data.created_at).fromNow() + '...';
             }
@@ -72,6 +72,9 @@
                 axios.delete(`/replies/${this.data.id}`);
                 this.$emit('deleted', this.data.id);
                 flash('You successfully deleted reply!!!', 'danger');
+            },
+            maskBestReply() {
+                this.isBest = true;
             }
         }
     }

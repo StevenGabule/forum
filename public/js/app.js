@@ -3149,11 +3149,6 @@ __webpack_require__.r(__webpack_exports__);
       body: ''
     };
   },
-  computed: {
-    signedIn: function signedIn() {
-      return window.App.signedIn;
-    }
-  },
   mounted: function mounted() {
     $('#body').atwho({
       at: "@",
@@ -3349,6 +3344,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3357,23 +3356,15 @@ __webpack_require__.r(__webpack_exports__);
     return {
       editing: false,
       id: this.data.id,
-      body: this.data.body
+      body: this.data.body,
+      isBest: false,
+      reply: this.data
     };
   },
   components: {
     Favorite: _Favorite__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   computed: {
-    signedIn: function signedIn() {
-      return window.App.signedIn;
-    },
-    canUpdate: function canUpdate() {
-      var _this = this;
-
-      return this.authorize(function (user) {
-        return _this.data.user_id === user.id;
-      });
-    },
     ago: function ago() {
       return moment__WEBPACK_IMPORTED_MODULE_1___default()(this.data.created_at).fromNow() + '...';
     }
@@ -3392,6 +3383,9 @@ __webpack_require__.r(__webpack_exports__);
       axios["delete"]("/replies/".concat(this.data.id));
       this.$emit('deleted', this.data.id);
       flash('You successfully deleted reply!!!', 'danger');
+    },
+    maskBestReply: function maskBestReply() {
+      this.isBest = true;
     }
   }
 });
@@ -57849,22 +57843,30 @@ var render = function() {
     "div",
     { staticClass: "card my-4", attrs: { id: "reply-" + _vm.id } },
     [
-      _c("div", { staticClass: "card-header" }, [
-        _c("div", { staticClass: "level d-flex justify-content-between" }, [
-          _c("h5", [
-            _c("a", {
-              attrs: { href: "/profiles/" + _vm.data.owner.name },
-              domProps: { textContent: _vm._s(_vm.data.owner.name) }
-            }),
-            _vm._v("said "),
-            _c("span", { domProps: { textContent: _vm._s(_vm.ago) } })
-          ]),
-          _vm._v(" "),
-          _vm.signedIn
-            ? _c("div", [_c("favorite", { attrs: { reply: _vm.data } })], 1)
-            : _vm._e()
-        ])
-      ]),
+      _c(
+        "div",
+        {
+          staticClass: "card-header",
+          class: _vm.isBest ? "bg-success text-white" : ""
+        },
+        [
+          _c("div", { staticClass: "level d-flex justify-content-between" }, [
+            _c("h5", [
+              _c("a", {
+                staticClass: "text-dark",
+                attrs: { href: "/profiles/" + _vm.data.owner.name },
+                domProps: { textContent: _vm._s(_vm.data.owner.name) }
+              }),
+              _vm._v(" said "),
+              _c("span", { domProps: { textContent: _vm._s(_vm.ago) } })
+            ]),
+            _vm._v(" "),
+            _vm.signedIn
+              ? _c("div", [_c("favorite", { attrs: { reply: _vm.data } })], 1)
+              : _vm._e()
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
         _vm.editing
@@ -57916,31 +57918,50 @@ var render = function() {
           : _c("div", { domProps: { innerHTML: _vm._s(_vm.body) } })
       ]),
       _vm._v(" "),
-      _vm.canUpdate
-        ? _c("div", { staticClass: "card-footer d-flex" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-sm btn-info mr-2",
-                on: {
-                  click: function($event) {
-                    _vm.editing = true
+      _c("div", { staticClass: "card-footer d-flex" }, [
+        _vm.authorize("updateReply", _vm.reply)
+          ? _c("div", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-info mr-2",
+                  on: {
+                    click: function($event) {
+                      _vm.editing = true
+                    }
                   }
-                }
-              },
-              [_vm._v("Edit")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
+                },
+                [_vm._v("Edit")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-danger mr-2",
+                  on: { click: _vm.destroy }
+                },
+                [_vm._v("Delete")]
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            directives: [
               {
-                staticClass: "btn btn-sm btn-danger mr-2",
-                on: { click: _vm.destroy }
-              },
-              [_vm._v("Delete")]
-            )
-          ])
-        : _vm._e()
+                name: "show",
+                rawName: "v-show",
+                value: !_vm.isBest,
+                expression: "!isBest"
+              }
+            ],
+            staticClass: "btn btn-sm btn-light ml-auto",
+            on: { click: _vm.maskBestReply }
+          },
+          [_vm._v("Mark as Best")]
+        )
+      ])
     ]
   )
 }
@@ -70238,6 +70259,22 @@ var app = new Vue({
 
 /***/ }),
 
+/***/ "./resources/js/authorizations.js":
+/*!****************************************!*\
+  !*** ./resources/js/authorizations.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var user = window.App.user;
+module.exports = {
+  updateReply: function updateReply(reply) {
+    return reply.user_id === user.id;
+  }
+};
+
+/***/ }),
+
 /***/ "./resources/js/bootstrap.js":
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
@@ -70251,6 +70288,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+
+var authorizations = __webpack_require__(/*! ./authorizations */ "./resources/js/authorizations.js");
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.authorize = function () {
+  if (!window.App.signedIn) return false;
+
+  for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {
+    params[_key] = arguments[_key];
+  }
+
+  if (typeof params[0] === 'string') {
+    return authorizations[params[0]](params[1]);
+  }
+
+  return params[0](window.App.user);
+};
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.signedIn = window.App.signedIn;
 
 try {
   window.Popper = __webpack_require__(/*! popper.js */ "./node_modules/popper.js/dist/esm/popper.js")["default"];
@@ -70270,11 +70325,6 @@ if (token) {
 }
 
 window.events = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
-
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.authorize = function (handler) {
-  var user = window.App.user;
-  return user ? handler(user) : false;
-};
 
 window.flash = function (message) {
   var level = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'success';

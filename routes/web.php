@@ -33,3 +33,6 @@ Route::get('api/users', 'Api\UserController@index');
 Route::post('/api/users/{user}/avatar', 'UserAvatarController@store')->middleware('auth')->name('avatar_path');
 
 Route::get('/register/confirm', 'Api\RegisterConfirmationController@index')->name('register.confirm');
+
+
+Route::post('/replies/{reply}/best', 'BestRepliesController@store');
