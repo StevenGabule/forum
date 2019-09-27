@@ -3386,6 +3386,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     maskBestReply: function maskBestReply() {
       this.isBest = true;
+      axios.post("/replies/".concat(this.data.id, "/best"))["catch"](function (error) {
+        return flash(error.response.data, 'danger');
+      });
     }
   }
 });

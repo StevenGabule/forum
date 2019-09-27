@@ -75,6 +75,7 @@
             },
             maskBestReply() {
                 this.isBest = true;
+                axios.post(`/replies/${this.data.id}/best`).catch(error => flash(error.response.data, 'danger'));
             }
         }
     }
