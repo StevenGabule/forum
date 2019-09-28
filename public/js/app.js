@@ -3357,18 +3357,26 @@ __webpack_require__.r(__webpack_exports__);
       editing: false,
       id: this.data.id,
       body: this.data.body,
-      isBest: false,
-      reply: this.data
+      reply: this.data,
+      thread: window.thread
     };
   },
   components: {
     Favorite: _Favorite__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   computed: {
+    isBest: function isBest() {
+      return this.thread.best_reply_id === this.id;
+    },
     ago: function ago() {
       return moment__WEBPACK_IMPORTED_MODULE_1___default()(this.data.created_at).fromNow() + '...';
     }
   },
+  // created() {
+  //     window.events.$on('best-reply-selected', id => {
+  //         this.isBest = (id === this.id);
+  //     })
+  // },
   methods: {
     update: function update() {
       axios.patch("/replies/".concat(this.data.id), {
@@ -3385,10 +3393,10 @@ __webpack_require__.r(__webpack_exports__);
       flash('You successfully deleted reply!!!', 'danger');
     },
     maskBestReply: function maskBestReply() {
-      this.isBest = true;
       axios.post("/replies/".concat(this.data.id, "/best"))["catch"](function (error) {
         return flash(error.response.data, 'danger');
       });
+      this.thread.best_reply_id = this.id; // window.events.$emit('best-reply-selected', this.data.id);
     }
   }
 });
@@ -57960,7 +57968,12 @@ var render = function() {
               }
             ],
             staticClass: "btn btn-sm btn-light ml-auto",
-            on: { click: _vm.maskBestReply }
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.maskBestReply($event)
+              }
+            }
           },
           [_vm._v("Mark as Best")]
         )

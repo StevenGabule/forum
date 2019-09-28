@@ -27,7 +27,7 @@
                 <button class="btn btn-sm btn-info mr-2" @click="editing = true">Edit</button>
                 <button class="btn btn-sm btn-danger mr-2" @click="destroy">Delete</button>
             </div>
-            <button class="btn btn-sm btn-light ml-auto" @click="maskBestReply" v-show="!isBest">Mark as Best</button>
+            <button class="btn btn-sm btn-light ml-auto" @click.prevent="maskBestReply" v-show="!isBest">Mark as Best</button>
         </div>
 
     </div>
@@ -45,18 +45,27 @@
                 editing: false,
                 id: this.data.id,
                 body: this.data.body,
-                isBest: false,
                 reply: this.data,
+                thread: window.thread,
             }
         },
 
         components: {Favorite},
 
         computed: {
+            isBest() {
+                return this.thread.best_reply_id === this.id;
+            },
             ago() {
                 return moment(this.data.created_at).fromNow() + '...';
             }
         },
+
+        // created() {
+        //     window.events.$on('best-reply-selected', id => {
+        //         this.isBest = (id === this.id);
+        //     })
+        // },
 
         methods: {
             update() {
@@ -68,14 +77,17 @@
                 this.editing = false;
                 flash('Updated!!!');
             },
+
             destroy() {
                 axios.delete(`/replies/${this.data.id}`);
                 this.$emit('deleted', this.data.id);
                 flash('You successfully deleted reply!!!', 'danger');
             },
+
             maskBestReply() {
-                this.isBest = true;
                 axios.post(`/replies/${this.data.id}/best`).catch(error => flash(error.response.data, 'danger'));
+                this.thread.best_reply_id = this.id;
+                // window.events.$emit('best-reply-selected', this.data.id);
             }
         }
     }

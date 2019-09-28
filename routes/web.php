@@ -34,5 +34,4 @@ Route::post('/api/users/{user}/avatar', 'UserAvatarController@store')->middlewar
 
 Route::get('/register/confirm', 'Api\RegisterConfirmationController@index')->name('register.confirm');
 
-
-Route::post('/replies/{reply}/best', 'BestRepliesController@store');
+Route::post('/replies/{reply}/best', 'BestRepliesController@store')->name('best-replies.store');
