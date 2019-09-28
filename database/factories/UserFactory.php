@@ -28,6 +28,15 @@ $factory->define(User::class, function (Faker $faker) {
     ];
 });
 
+$factory->state(User::class, 'unconfirmed', function() {
+   return [ 'confirmed' => false ];
+});
+
+$factory->state(User::class, 'administrator', function() {
+    return [ 'name' => 'JohnDoe'];
+});
+
+
 $factory->define(\Forum\Thread::class, function (Faker $faker) {
     return [
         'user_id' => function () {
@@ -39,7 +48,8 @@ $factory->define(\Forum\Thread::class, function (Faker $faker) {
         'title' => $faker->sentence,
         'body' => $faker->paragraph,
         'visits' => 0,
-        'slug' => str_slug($faker->sentence)
+        'slug' => str_slug($faker->sentence),
+        'locked' => false
     ];
 });
 
@@ -74,6 +84,3 @@ $factory->define(\Illuminate\Notifications\DatabaseNotification::class, function
         'data' => ['foo' => 'bar']
     ];
 });
-
-
-

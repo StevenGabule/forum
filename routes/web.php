@@ -9,6 +9,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/threads', 'ThreadsController@index')->name('threads');
 Route::get('/threads/create', 'ThreadsController@create');
 Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
+//Route::patch('threads/{channel}/{thread}', 'ThreadsController@update')->name('threads.update');
+
+Route::post('locked-threads/{thread}', 'LockedController@store')->name('locked-threads.store')->middleware('admin');
+Route::delete('locked-threads/{thread}', 'LockedController@destroy')->name('locked-threads.destroy')->middleware('admin');
+
 Route::delete('/threads/{channel}/{thread}', 'ThreadsController@destroy');
 Route::post('/threads', 'ThreadsController@store')->middleware('must-be-confirmed');
 Route::get('/threads/{channel}', 'ThreadsController@index');
@@ -35,3 +40,4 @@ Route::post('/api/users/{user}/avatar', 'UserAvatarController@store')->middlewar
 Route::get('/register/confirm', 'Api\RegisterConfirmationController@index')->name('register.confirm');
 
 Route::post('/replies/{reply}/best', 'BestRepliesController@store')->name('best-replies.store');
+
