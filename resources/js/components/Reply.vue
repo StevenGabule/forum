@@ -1,5 +1,7 @@
 <template>
+
     <div :id="'reply-'+id" class="card my-4">
+
         <div class="card-header" :class="isBest ? 'bg-success text-white' : ''">
             <div class="level d-flex justify-content-between">
                 <h5><a :href="'/profiles/'+ data.owner.name" v-text="data.owner.name" class="text-dark"></a> said <span
@@ -9,6 +11,7 @@
                 </div>
             </div>
         </div>
+
         <div class="card-body">
             <div v-if="editing">
                 <form @submit="update">
@@ -61,11 +64,6 @@
             }
         },
 
-        // created() {
-        //     window.events.$on('best-reply-selected', id => {
-        //         this.isBest = (id === this.id);
-        //     })
-        // },
 
         methods: {
             update() {
@@ -87,7 +85,6 @@
             maskBestReply() {
                 axios.post(`/replies/${this.data.id}/best`).catch(error => flash(error.response.data, 'danger'));
                 this.thread.best_reply_id = this.id;
-                // window.events.$emit('best-reply-selected', this.data.id);
             }
         }
     }
