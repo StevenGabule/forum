@@ -6,12 +6,12 @@ namespace Forum\Http\Controllers;
 use Exception;
 use Forum\Channel;
 use Forum\Filters\ThreadFilters;
+use Forum\Rules\Recaptcha;
 use Forum\Thread;
 use Forum\Trending;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
-use Zttp\Zttp;
 
 class ThreadsController extends Controller
 {
@@ -60,20 +60,15 @@ class ThreadsController extends Controller
      * @return Response
      * @throws ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request, Recaptcha $recaptcha)
     {
 
-        $this->validate($request, ['title' => 'required|spamfree', 'body' => 'required|spamfree', 'channel_id' => 'required|exists:channels,id']);
-
-        $response = Zttp::asFormParams()->post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret' => config('services.recaptcha.secret'),
-            'response' => $request->input('g-recaptcha-response'),
-            'remoteip' => $_SERVER['REMOTE_ADDR']
+        $this->validate($request, [
+            'title' => 'required|spamfree',
+            'body' => 'required|spamfree',
+            'channel_id' => 'required|exists:channels,id',
+            'g-recaptcha-response' => [$recaptcha]
         ]);
-
-        if (!$response->json()['success']) {
-            throw new Exception('Recaptcha failed');
-        }
 
         $thread = Thread::create([
             'user_id' => auth()->id(),
