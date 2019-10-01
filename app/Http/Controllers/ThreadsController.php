@@ -9,6 +9,7 @@ use Forum\Filters\ThreadFilters;
 use Forum\Rules\Recaptcha;
 use Forum\Thread;
 use Forum\Trending;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
@@ -108,6 +109,21 @@ class ThreadsController extends Controller
     public function edit(Thread $thread)
     {
         //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param $channel
+     * @param Thread $thread
+     * @return Thread
+     * @throws AuthorizationException
+     */
+    public function update($channel, Thread $thread)
+    {
+        $this->authorize('update', $thread);
+        $thread->update(request()->validate(['title' =>'required', 'body' =>'required']));
+        return $thread;
     }
 
     /**

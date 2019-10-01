@@ -9,7 +9,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/threads', 'ThreadsController@index')->name('threads');
 Route::get('/threads/create', 'ThreadsController@create');
 Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
-//Route::patch('threads/{channel}/{thread}', 'ThreadsController@update')->name('threads.update');
+Route::patch('threads/{channel}/{thread}', 'ThreadsController@update')->name('threads.update');
 
 Route::post('locked-threads/{thread}', 'LockedController@store')->name('locked-threads.store')->middleware('admin');
 Route::delete('locked-threads/{thread}', 'LockedController@destroy')->name('locked-threads.destroy')->middleware('admin');
